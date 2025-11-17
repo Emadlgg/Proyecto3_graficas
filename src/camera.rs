@@ -63,7 +63,7 @@ impl Camera {
     }
 
     pub fn get_projection_matrix(&self, aspect: f32) -> Mat4 {
-        perspective(aspect, PI / 4.0, 0.5, 1000.0)
+        perspective(aspect, PI / 4.0, 1.0, 500.0)
     }
 
     pub fn set_target(&mut self, target: Vec3) {

@@ -72,7 +72,7 @@ fn render(
 
 fn main() {
     let mut window = Window::new(
-        "Sistema Solar - Proyecto 2 | WASD: Mover | Flechas: Rotar | TAB: Warp",
+        "Sistema Solar - Proyecto 3",
         SCREEN_WIDTH,
         SCREEN_HEIGHT,
         WindowOptions::default(),
@@ -110,7 +110,7 @@ fn main() {
         .map(|planet| create_orbit_lines(planet.orbit.radius, 80, planet.orbit.inclination))
         .collect();
 
-    println!("🌌 Sistema Solar - Proyecto 2");
+    println!("🌌 Sistema Solar - Proyecto 3");
     println!("================================");
     println!("✅ Planetas en el sistema: {}", solar_system.planet_count());
     for (i, planet) in solar_system.planets.iter().enumerate() {
@@ -371,7 +371,7 @@ fn main() {
         let sun = &solar_system.sun;
         let distance_to_sun = (camera.eye - sun.get_position()).magnitude();
         
-        if distance_to_sun > sun.get_scale() * 2.0 {
+        if distance_to_sun > sun.get_scale() * 3.0 {
             let sun_model_matrix = create_model_matrix(
                 sun.get_position(),
                 sun.get_scale(),
@@ -395,7 +395,7 @@ fn main() {
             let distance_to_planet = (camera.eye - planet.get_position()).magnitude();
             
             // Solo renderizar si no estamos muy cerca
-            if distance_to_planet > planet.get_scale() * 1.5 {
+            if distance_to_planet > planet.get_scale() * 2.5 {
                 let planet_model_matrix = create_model_matrix(
                     planet.get_position(),
                     planet.get_scale(),

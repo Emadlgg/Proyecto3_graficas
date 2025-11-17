@@ -18,7 +18,7 @@ impl Framebuffer {
             width,
             height,
             buffer: vec![0; width * height],
-            zbuffer: vec![f32::INFINITY; width * height],
+            zbuffer: vec![1000.0; width * height],
             background_color: Color::black(),
             current_color: Color::new(255, 255, 255),
         }
@@ -30,7 +30,7 @@ impl Framebuffer {
             *pixel = bg_color;
         }
         for depth in self.zbuffer.iter_mut() {
-            *depth = f32::INFINITY;
+            *depth = 1000.0;
         }
     }
 
