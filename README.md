@@ -126,7 +126,7 @@ src/
 
 1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/tu-usuario/sistema-solar.git
+git clone https://github.com/Emadlgg/Proyecto3_graficas.git
 cd sistema-solar
 ```
 
@@ -202,7 +202,7 @@ Los shaders están implementados sin texturas, usando:
 **Osman Emanuel de Leon García**
 - Universidad del Valle de Guatemala
 - Gráficas por Computadora - 2025
-- [GitHub](https://github.com/tu-usuario)
+- [GitHub](https://github.com/Emadlgg)
 
 ---
 
@@ -222,7 +222,7 @@ Este proyecto fue desarrollado con fines educativos para el curso de Gráficas p
 
 ## 🔗 Links
 
-- [Repositorio](https://github.com/tu-usuario/sistema-solar)
+- [Repositorio](https://github.com/Emadlgg/Proyecto3_graficas.git)
 - [Video Demo](link-al-video)
 - [Documentación de Rust](https://www.rust-lang.org/)
 
