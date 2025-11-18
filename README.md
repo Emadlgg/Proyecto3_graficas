@@ -6,7 +6,7 @@ Simulación del sistema solar renderizada desde cero con un motor gráfico perso
 
 ## 🎥 Video Demo
 
-[![Video Demo](https://img.shields.io/badge/▶️-Ver_Demo-red?style=for-the-badge)](link-a-tu-video)
+[![Video Demo](https://img.shields.io/badge/▶️-Ver_Demo-red?style=for-the-badge)](https://youtu.be/Ba7nvaB2LQQ)
 
 ---
 
@@ -223,7 +223,7 @@ Este proyecto fue desarrollado con fines educativos para el curso de Gráficas p
 ## 🔗 Links
 
 - [Repositorio](https://github.com/Emadlgg/Proyecto3_graficas.git)
-- [Video Demo](link-al-video)
+- [Video Demo](https://youtu.be/Ba7nvaB2LQQ)
 - [Documentación de Rust](https://www.rust-lang.org/)
 
 ---
