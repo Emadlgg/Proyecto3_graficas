@@ -23,7 +23,7 @@ use crate::camera::Camera;
 use crate::ring::create_ring_vertices;
 use crate::celestial::{SolarSystem, CelestialBody};
 use crate::effects::{create_orbit_lines, WarpEffect};
-use crate::utils::{check_sphere_collision, resolve_sphere_collision};
+use crate::utils::{check_sphere_collision, resolve_sphere_collision, SafeZone};
 
 use minifb::{Key, Window, WindowOptions};
 use nalgebra_glm::Vec3;
@@ -140,6 +140,12 @@ fn main() {
         Vec3::new(0.0, 0.0, 0.0),
         Vec3::new(0.0, 1.0, 0.0),
     );
+
+    // CREAR SISTEMA DE WARP
+    let mut warp_effect = WarpEffect::new();
+
+    // 🆕 CREAR SISTEMA DE SAFE ZONE
+    let mut safe_zone = SafeZone::new(camera.eye);    
 
     // CREAR SISTEMA DE WARP
     let mut warp_effect = WarpEffect::new();
@@ -314,10 +320,49 @@ fn main() {
             }
         }
 
+        // 🆕 ============================================
+        // SAFE ZONE - TELEPORT AUTOMÁTICO SI HAY LAG
+        // ============================================
+
+        // Recolectar posiciones de planetas
+        let planet_data: Vec<(Vec3, f32)> = solar_system.planets
+            .iter()
+            .map(|p| (p.get_position(), p.get_scale()))
+            .collect();
+
+        // Recolectar radios de órbitas
+        let orbit_radii: Vec<f32> = solar_system.planets
+            .iter()
+            .map(|p| p.orbit.radius)
+            .collect();
+
+        // Verificar y corregir posición si es necesario
+        if let Some(safe_position) = safe_zone.check_and_correct(
+            camera.eye,
+            &planet_data,
+            &orbit_radii,
+        ) {
+            camera.eye = safe_position;
+            println!("✅ Cámara reubicada a posición segura");
+        }        
+
         // ============================================
         // RENDERIZADO
         // ============================================
         framebuffer.clear();
+
+        // 🆕 MOSTRAR ADVERTENCIA SI ESTAMOS EN ZONA PELIGROSA
+        if safe_zone.danger_counter > 0 {
+            // Cambiar fondo a rojo si hay peligro
+            let danger_intensity = (safe_zone.danger_counter as f32 / 3.0 * 50.0) as u8;
+            framebuffer.set_background_color(Color::new(
+                20 + danger_intensity,
+                5,
+                5
+            ));
+        } else {
+            framebuffer.set_background_color(Color::new(5, 5, 20));
+        }        
 
         // APLICAR EFECTO VISUAL DE WARP
         let warp_distortion = warp_effect.get_distortion_factor();
@@ -391,8 +436,12 @@ fn main() {
         }
 
         // 🆕 3. RENDERIZAR TODOS LOS PLANETAS (con culling)
+        let min_render_distance = 3.0;
         for planet in &solar_system.planets {
             let distance_to_planet = (camera.eye - planet.get_position()).magnitude();
+            if distance_to_planet < min_render_distance {
+                continue;  // Saltar este planeta
+            }
             
             // Solo renderizar si no estamos muy cerca
             if distance_to_planet > planet.get_scale() * 2.5 {
